@@ -1,0 +1,5 @@
+comment = 'Dynamic Time Warping for timestamped univariate sequences'
+default_version = '@PROJECT_VERSION@'
+module_pathname = '$libdir/pg_dtw'
+relocatable = true
+superuser = true

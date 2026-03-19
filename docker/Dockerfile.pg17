@@ -1,0 +1,15 @@
+FROM postgres:17-bookworm
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      build-essential \
+      cmake \
+      clang \
+      llvm \
+      git \
+      postgresql-server-dev-17 \
+      postgresql-17-pgtap \
+      pgtap && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /work

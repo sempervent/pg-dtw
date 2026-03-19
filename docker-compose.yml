@@ -1,0 +1,45 @@
+services:
+  pg15:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.pg15
+    image: pg-dtw:pg15
+    volumes:
+      - .:/work
+    working_dir: /work
+    environment:
+      PGUSER: postgres
+      PGDATABASE: postgres
+      PGHOST: /var/run/postgresql
+      PGPORT: "5432"
+    command: bash -lc "chmod +x test/run_pg_matrix.sh test/run_pg_regress.sh && test/run_pg_matrix.sh 15"
+
+  pg16:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.pg16
+    image: pg-dtw:pg16
+    volumes:
+      - .:/work
+    working_dir: /work
+    environment:
+      PGUSER: postgres
+      PGDATABASE: postgres
+      PGHOST: /var/run/postgresql
+      PGPORT: "5432"
+    command: bash -lc "chmod +x test/run_pg_matrix.sh test/run_pg_regress.sh && test/run_pg_matrix.sh 16"
+
+  pg17:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.pg17
+    image: pg-dtw:pg17
+    volumes:
+      - .:/work
+    working_dir: /work
+    environment:
+      PGUSER: postgres
+      PGDATABASE: postgres
+      PGHOST: /var/run/postgresql
+      PGPORT: "5432"
+    command: bash -lc "chmod +x test/run_pg_matrix.sh test/run_pg_regress.sh && test/run_pg_matrix.sh 17"

@@ -1,0 +1,44 @@
+include_guard(GLOBAL)
+
+function(pg_dtw_find_postgresql)
+    if(DEFINED ENV{PG_CONFIG})
+        set(PG_CONFIG_HINT "$ENV{PG_CONFIG}")
+    endif()
+
+    find_program(POSTGRESQL_PG_CONFIG
+        NAMES pg_config
+        HINTS "${PG_CONFIG_HINT}"
+        REQUIRED
+    )
+
+    execute_process(
+        COMMAND "${POSTGRESQL_PG_CONFIG}" --includedir-server
+        OUTPUT_VARIABLE POSTGRESQL_INCLUDE_DIR_SERVER
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    execute_process(
+        COMMAND "${POSTGRESQL_PG_CONFIG}" --includedir
+        OUTPUT_VARIABLE POSTGRESQL_INCLUDE_DIR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    execute_process(
+        COMMAND "${POSTGRESQL_PG_CONFIG}" --pkglibdir
+        OUTPUT_VARIABLE POSTGRESQL_PKGLIBDIR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    execute_process(
+        COMMAND "${POSTGRESQL_PG_CONFIG}" --sharedir
+        OUTPUT_VARIABLE POSTGRESQL_SHAREDIR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+
+    set(POSTGRESQL_INCLUDE_DIRS
+        "${POSTGRESQL_INCLUDE_DIR_SERVER}"
+        "${POSTGRESQL_INCLUDE_DIR}"
+        PARENT_SCOPE
+    )
+    set(POSTGRESQL_LIBRARIES "" PARENT_SCOPE)
+    set(POSTGRESQL_PG_CONFIG "${POSTGRESQL_PG_CONFIG}" PARENT_SCOPE)
+    set(POSTGRESQL_PKGLIBDIR "${POSTGRESQL_PKGLIBDIR}" PARENT_SCOPE)
+    set(POSTGRESQL_EXTENSION_DIR "${POSTGRESQL_SHAREDIR}/extension" PARENT_SCOPE)
+endfunction()
